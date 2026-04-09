@@ -1,0 +1,14 @@
+.card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 24px; backdrop-filter: blur(30px); }
+.title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(240,244,255,0.35); margin-bottom: 16px; }
+.svg { width: 100%; max-height: 110px; display: block; }
+.labels { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.sunTime { display: flex; align-items: center; gap: 8px; font-size: 20px; }
+.sunLabel { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(240,244,255,0.35); }
+.sunValue { font-size: 14px; font-weight: 600; font-family: "DM Mono",monospace; color: rgba(240,244,255,0.85); }
+.dayLength { text-align: center; }
+.dayLabel { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(240,244,255,0.35); }
+.dayValue { font-size: 15px; font-weight: 600; color: #f5c842; }
+.progressWrap { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+.progressBar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-bottom: 6px; }
+.progressFill { height: 100%; background: linear-gradient(to right,#f5c842,#fc8181); border-radius: 2px; transition: width 1s ease; }
+.progressPct { font-size: 11px; color: rgba(240,244,255,0.35); text-align: right; font-family: "DM Mono",monospace; }

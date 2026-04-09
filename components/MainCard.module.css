@@ -1,0 +1,20 @@
+.card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; padding: 32px; backdrop-filter: blur(30px); animation: fadeUp 0.6s cubic-bezier(0.4,0,0.2,1); }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+.location { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: rgba(240,244,255,0.7); }
+.date { font-family: "Playfair Display",serif; font-size: 13px; color: rgba(240,244,255,0.35); margin-top: 4px; }
+.time { font-family: "DM Mono",monospace; font-size: 13px; color: rgba(240,244,255,0.4); }
+.main { display: flex; align-items: center; gap: 24px; margin-bottom: 36px; }
+.emoji { font-size: 72px; line-height: 1; filter: drop-shadow(0 0 30px rgba(245,200,66,0.3)); animation: float 4s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)} }
+.temp { font-family: "Playfair Display",serif; font-size: 88px; font-weight: 900; line-height: 1; color: #f0f4ff; letter-spacing: -4px; }
+.desc { font-size: 16px; color: rgba(240,244,255,0.5); text-transform: capitalize; margin-top: 4px; }
+.hiLo { display: flex; align-items: center; gap: 6px; font-size: 14px; color: rgba(240,244,255,0.5); margin-top: 6px; font-family: "DM Mono",monospace; }
+.slash { color: rgba(240,244,255,0.2); }
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+@media (max-width:640px) { .stats{grid-template-columns:repeat(2,1fr)} .temp{font-size:64px} .emoji{font-size:52px} }
+.stat { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 12px 14px; transition: background 0.2s; }
+.stat:hover { background: rgba(99,179,237,0.06); }
+.statIcon { font-size: 18px; }
+.statLabel { font-size: 11px; color: rgba(240,244,255,0.35); text-transform: uppercase; letter-spacing: 0.07em; }
+.statValue { font-size: 14px; font-weight: 500; color: rgba(240,244,255,0.85); margin-top: 2px; }

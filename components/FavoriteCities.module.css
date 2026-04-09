@@ -1,0 +1,13 @@
+.card { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 24px; backdrop-filter: blur(30px); }
+.title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(240,244,255,0.35); margin-bottom: 16px; }
+.list { display: flex; flex-direction: column; gap: 6px; }
+.loading { display: flex; flex-direction: column; gap: 8px; }
+.skeleton { height: 48px; border-radius: 12px; background: rgba(255,255,255,0.04); animation: shimmer 1.5s ease infinite; }
+@keyframes shimmer { 0%,100%{opacity:0.4}50%{opacity:0.8} }
+.city { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.03); cursor:pointer; text-align:left; color:rgba(240,244,255,0.8); font-family:"DM Sans",sans-serif; transition:all 0.2s; width:100%; }
+.city:hover { background:rgba(99,179,237,0.08); border-color:rgba(99,179,237,0.2); }
+.city.active { background:rgba(99,179,237,0.12); border-color:rgba(99,179,237,0.3); }
+.cityIcon { font-size:20px; }
+.cityName { font-size:14px; font-weight:500; flex:1; }
+.cityDesc { font-size:12px; color:rgba(240,244,255,0.35); }
+.cityTemp { font-size:16px; font-weight:600; font-family:"DM Mono",monospace; color:rgba(240,244,255,0.85); }
