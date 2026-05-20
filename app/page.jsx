@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY || process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
 function weatherIcon(id) {
   if (id >= 200 && id < 300) return '⛈️';
@@ -29,6 +29,17 @@ function fmtTime(ts) {
   return new Date(ts * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 }
 
+async function getOpenWeatherError(res, fallback) {
+  if (res.status === 401) {
+    return 'Invalid OpenWeather API key. Update NEXT_PUBLIC_WEATHER_API_KEY in .env.local.';
+  }
+  try {
+    const data = await res.clone().json();
+    if (data?.message) return data.message;
+  } catch (_) {}
+  return fallback;
+}
+
 export default function Home() {
   const [unit, setUnit] = useState('C');
   const [query, setQuery] = useState('');
@@ -37,16 +48,26 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => { fetchWeather('Pune'); }, []);
+  useEffect(() => {
+    if (!API_KEY) {
+      setError('OpenWeather API key is missing. Add NEXT_PUBLIC_WEATHER_API_KEY to .env.local and restart the dev server.');
+      return;
+    }
+    fetchWeather('Pune');
+  }, []);
 
   async function fetchWeather(city) {
+    if (!API_KEY) throw new Error('OpenWeather API key is missing.');
     setLoading(true); setError(''); setWeather(null);
     try {
       const [wRes, fRes] = await Promise.all([
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`),
         fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`)
       ]);
-      if (!wRes.ok) throw new Error('City not found. Try another name.');
+      if (!wRes.ok || !fRes.ok) {
+        const badRes = wRes.ok ? fRes : wRes;
+        throw new Error(await getOpenWeatherError(badRes, 'City not found. Try another name.'));
+      }
       const [w, f] = await Promise.all([wRes.json(), fRes.json()]);
       setWeather(w); setForecast(f);
     } catch (e) { setError(e.message); }
@@ -54,15 +75,20 @@ export default function Home() {
   }
 
   async function fetchByCoords(lat, lon) {
+    if (!API_KEY) throw new Error('OpenWeather API key is missing.');
     setLoading(true); setError(''); setWeather(null);
     try {
       const [wRes, fRes] = await Promise.all([
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`),
         fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`)
       ]);
+      if (!wRes.ok || !fRes.ok) {
+        const badRes = wRes.ok ? fRes : wRes;
+        throw new Error(await getOpenWeatherError(badRes, 'Could not load location weather.'));
+      }
       const [w, f] = await Promise.all([wRes.json(), fRes.json()]);
       setWeather(w); setForecast(f);
-    } catch (e) { setError('Could not load location.'); }
+    } catch (e) { setError(e.message || 'Could not load location.'); }
     finally { setLoading(false); }
   }
 
